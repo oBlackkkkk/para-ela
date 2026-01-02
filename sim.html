@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O SIM VEIO! ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --primary-color: #ff4d6d; --bg-color: #fff0f3; --text-color: #590d22; }
+        body { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; text-align: center; }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            animation: slideUp 1s ease;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .img-celebration {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 77, 109, 0.3);
+            margin-bottom: 30px;
+            border: 5px solid white;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Animação para o texto subir suavemente */
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="celebration-music" autoplay loop>
+        <source src="belo.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <h1>Ela disse SIM! 😍</h1>
+        
+        <img src="eu_ela.png" class="img-celebration" alt="Nós dois">
+
+        <p>
+            Prometo te fazer a mulher mais feliz do mundo.<br>
+            Obrigado por me escolher.
+        </p>
+        <p style="font-size: 1.5rem; color: #ff4d6d; font-weight: bold; margin-top: 30px;">
+            Agora olha pra mim... ❤️
+        </p>
+
+    </div>
+
+    <script>
+        window.onload = function() {
+            // --- CONFIGURAÇÃO DO ÁUDIO ---
+            const audio = document.getElementById('celebration-music');
+            audio.volume = 0.3; // Volume ambiente (30%)
+            
+            // Tenta dar play
+            audio.play().catch(error => {
+                console.log("Autoplay bloqueado. O usuário precisa interagir.");
+            });
+            // -----------------------------
+
+            // --- CONFETES INFINITOS ---
+            const duration = 15 * 1000; 
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) { return clearInterval(interval); }
+
+                const particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        };
+    </script>
+</body>
+</html>

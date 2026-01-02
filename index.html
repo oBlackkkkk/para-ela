@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Você ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root { --primary-color: #ff4d6d; --bg-color: #fff0f3; --text-color: #590d22; }
+        body { margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
+        #start-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #ff8fa3, #ff4d6d); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 1000; transition: opacity 0.8s ease; }
+        #start-screen h1 { color: white; font-family: 'Dancing Script', cursive; font-size: 3rem; margin-bottom: 20px; }
+        .btn-start { padding: 15px 40px; background: white; color: var(--primary-color); border: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.2s; }
+        .btn-start:active { transform: scale(0.95); }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; display: none; padding-bottom: 100px; }
+        .header { text-align: center; margin: 40px 0; animation: fadeIn 2s ease; }
+        .header h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: var(--primary-color); }
+        .memory-card { background: white; border-radius: 20px; padding: 20px; margin-bottom: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .memory-card.visible { opacity: 1; transform: translateY(0); }
+        .memory-card img { width: 100%; border-radius: 15px; margin-bottom: 15px; object-fit: cover; }
+        .memory-card p { line-height: 1.6; font-size: 1.1rem; color: #555; }
+        .date { color: var(--primary-color); font-weight: bold; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: block; }
+        .proposal-section { text-align: center; margin-top: 60px; opacity: 0; transform: scale(0.9); transition: all 1s ease; }
+        .proposal-section.visible { opacity: 1; transform: scale(1); }
+        .proposal-section h2 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 30px; }
+        .buttons { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .btn-yes { padding: 15px 30px; background-color: var(--primary-color); color: white; border: none; border-radius: 50px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 5px 20px rgba(255, 77, 109, 0.4); transition: transform 0.2s; }
+        .btn-yes:hover { transform: scale(1.1); }
+    </style>
+</head>
+<body>
+    <div id="start-screen">
+        <h1>Para Manuella</h1>
+        <p style="color: white; margin-bottom: 30px;">(Coloque os fones de ouvido 🎧)</p>
+        <button class="btn-start" onclick="startExperience()">Clique para ver</button>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="belo.mp3" type="audio/mpeg">
+    </audio>
+    <div class="container" id="main-content">
+        <div class="header"><h1>Nossa História</h1><p>Role para baixo...</p></div>
+        
+        <div class="memory-card"><span class="date">O Início</span><img src="show_Belo.png"><p>Lembra desse dia? Foi quando tudo começou...</p></div>
+        <div class="memory-card"><span class="date">Momentos</span><img src="show_boi.png"><p>Cada risada com você faz meu dia melhorar 100%.</p></div>
+        <pVocê class="memory-card"><span class="date">Hoje</span><p>"Olha onde começamos e onde estamos hoje... Sempre com paciência (e tendo que te deixar na esquina de casa por motivos que já sabemos kkk).</p>
+<p>Você transformou minha vida e é minha pessoa favorita. Posso até ser emocionado às vezes (quase sempre), mas é porque amo seu jeito e amo você por inteira. Quero estar com você sempre.</p>
+<p>E como eu sempre digo: ninguém supera um homem paciente."</p></div>
+
+        <div class="proposal-section">
+            <h2>Quer namorar comigo?</h2>
+            <div class="buttons">
+                <button class="btn-yes" onclick="aceitou()">Sim, eu aceito! ❤️</button>
+                <button class="btn-yes" onclick="aceitou()">Com certeza! 😍</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function startExperience() {
+            const startScreen = document.getElementById('start-screen');
+            const mainContent = document.getElementById('main-content');
+            const audio = document.getElementById('bg-music');
+            audio.volume = 0.2;
+            audio.play().then(() => {
+                console.log("Áudio tocando!");
+            }).catch(error => {
+                console.log("Erro ao tocar áudio:", error);
+                alert("Clique na tela novamente para liberar o áudio.");
+            });
+            startScreen.style.opacity = '0';
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+                mainContent.style.display = 'block';
+                setupScrollAnimation();
+            }, 800);
+        }
+        function setupScrollAnimation() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.memory-card, .proposal-section').forEach((el) => {
+                observer.observe(el);
+            });
+        }
+        function aceitou() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            setTimeout(() => {
+                window.location.href = "sim.html";
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
